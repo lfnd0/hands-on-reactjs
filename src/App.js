@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [input, setInput] = useState("");
-  const [tasks, setTask] = useState([
-    "Estudar ReactJS",
-    "Ler livro Engenharia de Software Moderna"
-  ]);
+  const [tasks, setTask] = useState([]);
+
+  useEffect(() => {
+    const storageTasks = localStorage.getItem("task_list");
+
+    if (storageTasks) {
+      setTask(JSON.parse(storageTasks));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("task_list", JSON.stringify(tasks));
+  }, [tasks]);
 
   function handleRegister(event) {
     event.preventDefault();
