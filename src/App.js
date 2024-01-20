@@ -1,13 +1,20 @@
-import Message from "./components/Message";
+import { useState } from "react";
 
 export default function App() {
-  return(
+  const [student, setStudent] = useState("Logan");
+
+  function handleChangeName(name) {
+    setStudent(name);
+  }
+
+  return (
     <div>
       <h1>Meu componente</h1>
-      <br/>
-      <Message name="Logan" age={22}/>
-      <br/>
-      <Message name="Spencer" age={20}/>
+      <br />
+      <h2>Olá {student}!</h2>
+      <button onClick={() => handleChangeName(student === "Logan" ? "Spencer" : "Logan")}>
+        Change!
+      </button>
     </div>
   );
 }
