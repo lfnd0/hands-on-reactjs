@@ -1,47 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import "./style.css";
 
 export default function App() {
-  const [input, setInput] = useState("");
-  const [tasks, setTask] = useState([]);
+  const [nutrition, setNutrition] = useState([]);
 
-  useEffect(() => {
-    const storageTasks = localStorage.getItem("task_list");
+  function loadDataFromNutritionAPI() {
+    const url = "https://sujeitoprogramador.com/rn-api/?api=posts";
 
-    if (storageTasks) {
-      setTask(JSON.parse(storageTasks));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("task_list", JSON.stringify(tasks));
-  }, [tasks]);
-
-  function handleRegister(event) {
-    event.preventDefault();
-    setTask([...tasks, input]);
-    setInput("");
+    fetch(url)
+      .then(respose => respose.json())
+      .then(data => setNutrition(data))
+      .catch(error => console.error(error))
   }
 
+  useEffect(() => {
+    loadDataFromNutritionAPI();
+  }, []);
+
   return (
-    <div>
-      <h1>To-Do List</h1>
+    <div className="container">
+      <header>
+        <strong>Artigos Sobre Nutrição</strong>
+      </header>
 
-      <form onSubmit={handleRegister}>
-        <label>Título da tarefa:</label><br />
-        <input
-          placeholder="Insira sua tarefa"
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-        /><br />
+      {
+        nutrition.map(item => {
+          return (
+            <article className="posts" key={item.id}>
+              <strong className="title">{item.titulo}</strong>
 
-        <button type="submit">Adicionar Tarefa</button><br />
-      </form>
+              <img src={item.capa} alt={item.titulo} />
 
-      <ul>
-        {tasks.map(task => (
-          <li key={task}>{task}</li>
-        ))}
-      </ul>
+              <p className="subtitle">
+                {item.subtitulo}
+              </p>
+
+              <a className="button" href="/" title={item.titulo}>Ler Artigo</a>
+            </article>
+          );
+        })
+      }
     </div>
   );
 }
