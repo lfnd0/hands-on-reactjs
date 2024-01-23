@@ -1,13 +1,13 @@
-import "./App.css";
+import { Container, Header, Message, Title } from "./styles";
 
 export default function App() {
   return (
-    <div className="container">
-      <header className="header">
-        <a className="title" href="/">Hands On ReactJS</a>
-      </header>
+    <Container>
+      <Header>
+        <Title href="/">Hands On ReactJS</Title>
+      </Header>
 
-      <h1>Bem vindo(a)!</h1>
-    </div>
+      <Message color="0000FF" fontSize={35}>Bem vindo(a)!</Message>
+    </Container>
   );
 }
