@@ -10,6 +10,8 @@ export default function Contact() {
 
       <Link to="/">Home</Link>
       <span> | </span>
+      <Link to="/products">Produtos</Link>
+      <span> | </span>
       <Link to="/about">Sobre</Link>
     </div>
   );
